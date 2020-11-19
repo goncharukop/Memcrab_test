@@ -1,0 +1,24 @@
+.table {
+  position: relative;
+  margin: 20px;
+}
+
+.table-major {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+}
+
+.table__cell {
+  padding: 10px;
+  width: 70px;
+
+  border: 2px solid grey;
+  border-radius: 10px;
+
+  text-align: center;
+
+  &:hover {
+    background-color: aquamarine;
+  }
+}
