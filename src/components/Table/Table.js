@@ -1,8 +1,8 @@
-/* eslint-disable no-loop-func */
 /* eslint-disable no-param-reassign */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-loop-func */
 import React, { useState } from 'react';
 import './Table.scss';
-// import PropTypes from 'prop-types';
 
 let M = 5;
 const N = 6;
@@ -26,9 +26,6 @@ const matrixCreate = () => {
 
     matrix.push(matrixRow);
   }
-
-  // eslint-disable-next-line no-console
-  console.log(matrix);
 
   return matrix;
 };
@@ -86,7 +83,7 @@ export const Table = () => {
     for (let i = M; i <= M; i += 1) {
       const newMatrixRow = [];
 
-      for (let j = 1; j <= N; j += 1) {
+      for (let j = 0; j < N; j += 1) {
         const randomNum = Math.floor(Math.random() * 1000);
 
         newMatrixRow.push({
@@ -100,14 +97,12 @@ export const Table = () => {
     }
 
     M += 1;
-
     setNewMatrix([...matrix]);
 
     return M;
   };
 
   const deleteRow = ({ row }) => {
-    // eslint-disable-next-line no-restricted-syntax
     for (const newRow of matrix) {
       if (newRow[0].id[0] === row.id) {
         matrix = [...matrix].filter(rowM => rowM !== newRow);
@@ -115,7 +110,6 @@ export const Table = () => {
     }
 
     M -= 1;
-
     setNewMatrix(matrix);
 
     return M;
@@ -143,13 +137,21 @@ export const Table = () => {
           if (counter < X) {
             temp += 1;
           }
-
-          return cell;
         });
-
-        return row;
       });
     }
+
+    setNewMatrix([...matrix]);
+
+    return matrix;
+  };
+
+  const getInitialColor = () => {
+    matrix.forEach((row) => {
+      row.forEach((cell) => {
+        cell.className = 'table__cell ui button';
+      });
+    });
 
     setNewMatrix([...matrix]);
 
@@ -171,8 +173,11 @@ export const Table = () => {
                         type="button"
                         className={el.className}
                         onClick={() => addOne({ el })}
-                        onMouseOver={() => getNeighborValue({ el })}
-                        onFocus
+                        onMouseOver={() => {
+                          getInitialColor();
+                          getNeighborValue({ el });
+                        }}
+                        onFocus={() => getInitialColor()}
                       >
                         {el.amount}
                       </button>
@@ -240,5 +245,3 @@ export const Table = () => {
     </>
   );
 };
-
-// Table.propTypes = {};

@@ -1,33 +1,33 @@
 .table {
   position: relative;
   margin: 20px;
+
+  &__cell {
+    padding: 20px;
+    margin: 10px;
+    width: 100px;
+  
+    border: 2px solid grey;
+    border-radius: 10px;
+  
+    text-align: center;
+    font-size: large;
+  
+    cursor: pointer;
+  
+    transition: background-color 0.5s; 
+  
+    &:hover {
+      background-color:#A60028;
+      font-weight: 900;
+    }
+  }
 }
 
 .table-major {
   display: flex;
   position: relative;
   flex-direction: row;
-}
-
-.table__cell {
-  padding: 20px;
-  margin: 10px;
-  width: 100px;
-
-  border: 2px solid grey;
-  border-radius: 10px;
-
-  text-align: center;
-  font-size: large;
-
-  cursor: pointer;
-
-  transition: background-color 0.5s; 
-
-  &:hover {
-    background-color:#A60028;
-    font-weight: 900;
-  }
 }
 
 .add-btn {
