@@ -76,7 +76,7 @@ export const Table = () => {
   const addOne = ({ el }) => {
     el.amount += 1;
 
-    setNewMatrix([...matrix, el.amount]);
+    setNewMatrix([...matrix, el.amount + 1]);
   };
 
   const addRow = () => {
