@@ -11,6 +11,7 @@
 
 .table__cell {
   padding: 20px;
+  margin: 10px;
   width: 100px;
 
   border: 2px solid grey;
@@ -21,8 +22,10 @@
 
   cursor: pointer;
 
+  transition: background-color 0.5s; 
+
   &:hover {
-    background-color: aquamarine;
+    background-color:#A60028;
     font-weight: 900;
   }
 }

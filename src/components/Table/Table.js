@@ -1,14 +1,14 @@
-/* eslint-disable jsx-a11y/label-has-for */
-import React from 'react';
+/* eslint-disable no-loop-func */
+/* eslint-disable no-param-reassign */
+import React, { useState } from 'react';
 import './Table.scss';
 // import PropTypes from 'prop-types';
 
-// const [state, setState] = useState([]);
+let M = 5;
+const N = 6;
+const X = 3;
 
-export const M = 7;
-export const N = 4;
-
-export const matrixCreate = () => {
+const matrixCreate = () => {
   const matrix = [];
 
   for (let i = 1; i <= M; i += 1) {
@@ -19,15 +19,13 @@ export const matrixCreate = () => {
 
       matrixRow.push({
         id: [i, j],
-        // id: i * 10 + j,
         amount: randomNum > 100 ? randomNum : randomNum + 100,
+        className: 'table__cell ui button',
       });
     }
 
     matrix.push(matrixRow);
   }
-
-  // setState(matrix);
 
   // eslint-disable-next-line no-console
   console.log(matrix);
@@ -35,36 +33,95 @@ export const matrixCreate = () => {
   return matrix;
 };
 
-export const Table = () => {
-  const matrix = matrixCreate();
-  const rowSum = [];
+const getColumnAverage = (newMatrix) => {
   const columnAverage = [];
-
-  for (let i = 0; i < M; i += 1) {
-    rowSum
-      .push({
-        sum: matrix[i].reduce((acc, el) => acc + el.amount, 0),
-        id: i + 1,
-      });
-  }
 
   for (let j = 0; j < N; j += 1) {
     let temp = 0;
 
     for (let i = 0; i < M; i += 1) {
-      if (matrix[i][j].id[1] === j + 1) {
+      if (newMatrix[i][j].id[1] === j + 1) {
         temp += matrix[i][j].amount;
       }
     }
 
     columnAverage.push({
-      average: Math.round(temp / N),
+      average: Math.round(temp / M),
       id: j + 1,
     });
   }
 
-  // eslint-disable-next-line no-console
-  console.log(columnAverage);
+  return columnAverage;
+};
+
+const getRowSum = (newMatrix) => {
+  const rowSum = [];
+
+  for (let i = 0; i < M; i += 1) {
+    rowSum
+      .push({
+        sum: newMatrix[i].reduce((acc, el) => acc + el.amount, 0),
+        id: i + 1,
+      });
+  }
+
+  return rowSum;
+};
+
+let matrix = matrixCreate();
+
+export const Table = () => {
+  const [newMatrix, setNewMatrix] = useState(matrix);
+
+  const rowSum = getRowSum(newMatrix);
+  const columnAverage = getColumnAverage(newMatrix);
+
+  const addOne = ({ el }) => {
+    el.amount += 1;
+
+    setNewMatrix([...matrix, el.amount + 1]);
+  };
+
+  const addRow = () => {
+    M += 1;
+    setNewMatrix(matrixCreate());
+    matrix = matrixCreate();
+  };
+
+  const getNeighborValue = ({ el }) => {
+    let counter = 0;
+    let x = 0;
+
+    while (counter < X) {
+      matrix.forEach((row) => {
+        row.forEach((cell) => {
+          if (el.amount + x >= cell.amount
+          && el.amount - x <= cell.amount
+          && el.id !== cell.id) {
+            if (cell.className !== 'table__cell ui button blue'
+              && counter < X) {
+              cell.className = 'table__cell ui button blue';
+              counter += 1;
+            }
+          } else {
+            cell.className = 'table__cell ui button';
+          }
+
+          if (counter < X) {
+            x += 1;
+          }
+
+          return cell;
+        });
+
+        return row;
+      });
+    }
+
+    setNewMatrix([...matrix]);
+
+    // return matrix;
+  };
 
   return (
     <>
@@ -74,8 +131,16 @@ export const Table = () => {
             { matrix.map(row => (
               <tr key={row[0].id}>
                 {row.map(el => (
-                  <td key={el.id} className="table__cell">
-                    {el.amount}
+                  <td key={el.id}>
+                    <button
+                      type="button"
+                      className={el.className}
+                      onClick={() => addOne({ el })}
+                      onMouseOver={() => getNeighborValue({ el })}
+                      onFocus
+                    >
+                      {el.amount}
+                    </button>
                   </td>
                 ))}
               </tr>
@@ -87,8 +152,13 @@ export const Table = () => {
           <tbody>
             { rowSum.map(row => (
               <tr key={row.id}>
-                <td className="table__cell">
-                  {row.sum}
+                <td>
+                  <button
+                    type="button"
+                    className="table__cell ui button red"
+                  >
+                    {row.sum}
+                  </button>
                 </td>
               </tr>
             ))}
@@ -100,13 +170,26 @@ export const Table = () => {
         <tbody>
           <tr>
             { columnAverage.map(number => (
-              <td key={number.id} className="table__cell">
-                {number.average}
+              <td key={number.id}>
+                <button
+                  type="button"
+                  className="table__cell ui button green"
+                >
+                  {Math.round(number.average)}
+                </button>
               </td>
             ))}
           </tr>
         </tbody>
       </table>
+
+      <button
+        type="button"
+        className="table__cell ui button black"
+        onClick={() => addRow()}
+      >
+        Add row
+      </button>
     </>
   );
 };
