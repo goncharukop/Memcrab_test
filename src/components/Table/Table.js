@@ -88,6 +88,20 @@ export const Table = () => {
     setNewMatrix(matrix);
   };
 
+  const deleteRow = ({ row }) => {
+    let mat = [];
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const newRow of matrix) {
+      if (newRow[0].id[0] === row.id) {
+        mat = matrix.filter(rowM => rowM !== newRow);
+      }
+    }
+
+    M -= 1;
+    setNewMatrix(mat);
+  };
+
   const getNeighborValue = ({ el }) => {
     let counter = 0;
     let x = 0;
@@ -129,7 +143,7 @@ export const Table = () => {
         <table className="table">
           <tbody>
             <th>
-              Table random values
+              Table with random values
               { matrix.map(row => (
                 <tr key={row[0].id}>
                   {row.map(el => (
@@ -167,7 +181,7 @@ export const Table = () => {
                 <button
                   type="button"
                   className="ui button red"
-                  onClick={() => addRow()}
+                  onClick={() => deleteRow({ row })}
                 >
                   Delete row
                 </button>
