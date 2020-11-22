@@ -84,8 +84,8 @@ export const Table = () => {
 
   const addRow = () => {
     M += 1;
-    setNewMatrix(matrixCreate());
     matrix = matrixCreate();
+    setNewMatrix(matrix);
   };
 
   const getNeighborValue = ({ el }) => {
@@ -128,38 +128,49 @@ export const Table = () => {
       <div className="table-major">
         <table className="table">
           <tbody>
-            { matrix.map(row => (
-              <tr key={row[0].id}>
-                {row.map(el => (
-                  <td key={el.id}>
-                    <button
-                      type="button"
-                      className={el.className}
-                      onClick={() => addOne({ el })}
-                      onMouseOver={() => getNeighborValue({ el })}
-                      onFocus
-                    >
-                      {el.amount}
-                    </button>
-                  </td>
-                ))}
-              </tr>
-            ))}
+            <th>
+              Table random values
+              { matrix.map(row => (
+                <tr key={row[0].id}>
+                  {row.map(el => (
+                    <td key={el.id}>
+                      <button
+                        type="button"
+                        className={el.className}
+                        onClick={() => addOne({ el })}
+                        onMouseOver={() => getNeighborValue({ el })}
+                        onFocus
+                      >
+                        {el.amount}
+                      </button>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </th>
           </tbody>
         </table>
 
         <table className="table">
           <tbody>
+            <th>Sum</th>
             { rowSum.map(row => (
               <tr key={row.id}>
                 <td>
                   <button
                     type="button"
-                    className="table__cell ui button red"
+                    className="table__cell ui button yellow"
                   >
                     {row.sum}
                   </button>
                 </td>
+                <button
+                  type="button"
+                  className="ui button red"
+                  onClick={() => addRow()}
+                >
+                  Delete row
+                </button>
               </tr>
             ))}
           </tbody>
@@ -168,18 +179,21 @@ export const Table = () => {
 
       <table className="table">
         <tbody>
-          <tr>
-            { columnAverage.map(number => (
-              <td key={number.id}>
-                <button
-                  type="button"
-                  className="table__cell ui button green"
-                >
-                  {Math.round(number.average)}
-                </button>
-              </td>
-            ))}
-          </tr>
+          <th>
+            Average value in column
+            <tr>
+              { columnAverage.map(number => (
+                <td key={number.id}>
+                  <button
+                    type="button"
+                    className="table__cell ui button green"
+                  >
+                    {Math.round(number.average)}
+                  </button>
+                </td>
+              ))}
+            </tr>
+          </th>
         </tbody>
       </table>
 
