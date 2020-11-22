@@ -11,11 +11,11 @@ const X = 3;
 const matrixCreate = () => {
   const matrix = [];
 
-  for (let i = 1; i <= M; i += 1) {
+  for (let i = 0; i < M; i += 1) {
     const matrixRow = [];
 
-    for (let j = 1; j <= N; j += 1) {
-      const randomNum = Math.ceil(Math.random() * 1000);
+    for (let j = 0; j < N; j += 1) {
+      const randomNum = Math.floor(Math.random() * 1000);
 
       matrixRow.push({
         id: [i, j],
@@ -40,14 +40,14 @@ const getColumnAverage = (newMatrix) => {
     let temp = 0;
 
     for (let i = 0; i < M; i += 1) {
-      if (newMatrix[i][j].id[1] === j + 1) {
+      if (newMatrix[i][j].id[1] === j) {
         temp += matrix[i][j].amount;
       }
     }
 
     columnAverage.push({
-      average: Math.round(temp / M),
-      id: j + 1,
+      average: M ? Math.round(temp / M) : 0,
+      id: j,
     });
   }
 
@@ -61,7 +61,7 @@ const getRowSum = (newMatrix) => {
     rowSum
       .push({
         sum: newMatrix[i].reduce((acc, el) => acc + el.amount, 0),
-        id: i + 1,
+        id: i,
       });
   }
 
@@ -79,38 +79,57 @@ export const Table = () => {
   const addOne = ({ el }) => {
     el.amount += 1;
 
-    setNewMatrix([...matrix, el.amount + 1]);
+    setNewMatrix([...matrix, el.amount]);
   };
 
   const addRow = () => {
+    for (let i = M; i <= M; i += 1) {
+      const newMatrixRow = [];
+
+      for (let j = 1; j <= N; j += 1) {
+        const randomNum = Math.floor(Math.random() * 1000);
+
+        newMatrixRow.push({
+          id: [i, j],
+          amount: randomNum > 100 ? randomNum : randomNum + 100,
+          className: 'table__cell ui button',
+        });
+      }
+
+      matrix.push(newMatrixRow);
+    }
+
     M += 1;
-    matrix = matrixCreate();
-    setNewMatrix(matrix);
+
+    setNewMatrix([...matrix]);
+
+    return M;
   };
 
   const deleteRow = ({ row }) => {
-    let mat = [];
-
     // eslint-disable-next-line no-restricted-syntax
     for (const newRow of matrix) {
       if (newRow[0].id[0] === row.id) {
-        mat = matrix.filter(rowM => rowM !== newRow);
+        matrix = [...matrix].filter(rowM => rowM !== newRow);
       }
     }
 
     M -= 1;
-    setNewMatrix(mat);
+
+    setNewMatrix(matrix);
+
+    return M;
   };
 
   const getNeighborValue = ({ el }) => {
     let counter = 0;
-    let x = 0;
+    let temp = 0;
 
     while (counter < X) {
       matrix.forEach((row) => {
         row.forEach((cell) => {
-          if (el.amount + x >= cell.amount
-          && el.amount - x <= cell.amount
+          if (el.amount + temp >= cell.amount
+          && el.amount - temp <= cell.amount
           && el.id !== cell.id) {
             if (cell.className !== 'table__cell ui button blue'
               && counter < X) {
@@ -122,7 +141,7 @@ export const Table = () => {
           }
 
           if (counter < X) {
-            x += 1;
+            temp += 1;
           }
 
           return cell;
@@ -134,7 +153,7 @@ export const Table = () => {
 
     setNewMatrix([...matrix]);
 
-    // return matrix;
+    return matrix;
   };
 
   return (
@@ -200,7 +219,7 @@ export const Table = () => {
                 <td key={number.id}>
                   <button
                     type="button"
-                    className="table__cell ui button green"
+                    className="table__cell ui button orange"
                   >
                     {Math.round(number.average)}
                   </button>
@@ -213,7 +232,7 @@ export const Table = () => {
 
       <button
         type="button"
-        className="table__cell ui button black"
+        className="table__cell ui button green add-btn"
         onClick={() => addRow()}
       >
         Add row
