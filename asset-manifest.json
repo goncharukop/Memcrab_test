@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Memcrab_test/static/css/main.e78809f4.chunk.css",
-    "main.js": "/Memcrab_test/static/js/main.36994de2.chunk.js",
-    "main.js.map": "/Memcrab_test/static/js/main.36994de2.chunk.js.map",
+    "main.js": "/Memcrab_test/static/js/main.eab979c6.chunk.js",
+    "main.js.map": "/Memcrab_test/static/js/main.eab979c6.chunk.js.map",
     "runtime-main.js": "/Memcrab_test/static/js/runtime-main.8ee61e76.js",
     "runtime-main.js.map": "/Memcrab_test/static/js/runtime-main.8ee61e76.js.map",
     "static/css/2.d9060d66.chunk.css": "/Memcrab_test/static/css/2.d9060d66.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.d9060d66.chunk.css",
     "static/js/2.7a0454d5.chunk.js",
     "static/css/main.e78809f4.chunk.css",
-    "static/js/main.36994de2.chunk.js"
+    "static/js/main.eab979c6.chunk.js"
   ]
 }
