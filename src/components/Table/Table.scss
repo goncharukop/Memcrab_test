@@ -3,25 +3,32 @@
   margin: 20px;
 
   &__cell {
+    position: relative;
     padding: 20px;
     margin: 10px;
     width: 100px;
-  
-    border: 2px solid grey;
-    border-radius: 10px;
+    height: 50px;
   
     text-align: center;
     font-size: large;
   
     cursor: pointer;
   
-    transition: background-color 0.5s; 
-  
     &:hover {
-      background-color:#A60028;
       font-weight: 900;
     }
   }
+}
+
+.table__cell-percent {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100px;
+  background-color:#007025;
+  opacity: 50%;
+  border-bottom-left-radius: 0.285rem;
+  border-bottom-right-radius: 0.285rem;
 }
 
 .table-major {

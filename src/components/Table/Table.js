@@ -66,6 +66,7 @@ const getRowSum = (newMatrix) => {
 };
 
 let matrix = matrixCreate();
+let showPercent = false;
 
 export const Table = () => {
   const [newMatrix, setNewMatrix] = useState(matrix);
@@ -158,6 +159,33 @@ export const Table = () => {
     return matrix;
   };
 
+  const getPercent = ({ row }) => {
+    matrix.forEach((newRow) => {
+      newRow.forEach((cell) => {
+        if (row.id === cell.id[0]) {
+          // eslint-disable-next-line no-restricted-properties
+          cell.percent = `${(cell.amount / row.sum * 100).toFixed(2)}%`;
+        } else {
+          cell.percent = cell.amount;
+        }
+      });
+    });
+
+    showPercent = true;
+
+    setNewMatrix([...matrix]);
+
+    return matrix;
+  };
+
+  const getAmount = () => {
+    showPercent = false;
+
+    setNewMatrix([...matrix]);
+
+    return matrix;
+  };
+
   return (
     <>
       <div className="table-major">
@@ -179,7 +207,15 @@ export const Table = () => {
                         }}
                         onFocus={() => getInitialColor()}
                       >
-                        {el.amount}
+                        {
+                          showPercent
+                            ? `${el.percent}`
+                            : `${el.amount}`
+                        }
+                        <span
+                          className="table__cell-percent"
+                          style={{ height: showPercent ? `${el.percent}` : `` }}
+                        />
                       </button>
                     </td>
                   ))}
@@ -198,6 +234,13 @@ export const Table = () => {
                   <button
                     type="button"
                     className="table__cell ui button yellow"
+                    onMouseOver={() => {
+                      getInitialColor();
+                      getPercent({ row });
+                    }}
+                    onMouseOut={() => getAmount()}
+                    onFocus={() => getInitialColor()}
+                    onBlur={() => getAmount()}
                   >
                     {row.sum}
                   </button>
