@@ -6,7 +6,6 @@ import './Table.scss';
 
 let M = 5;
 const N = 6;
-const X = 3;
 
 const matrixCreate = () => {
   const matrix = [];
@@ -70,6 +69,7 @@ let showPercent = false;
 
 export const Table = () => {
   const [newMatrix, setNewMatrix] = useState(matrix);
+  const [X, setX] = useState(3);
 
   const rowSum = getRowSum(newMatrix);
   const columnAverage = getColumnAverage(newMatrix);
@@ -78,6 +78,18 @@ export const Table = () => {
     el.amount += 1;
 
     setNewMatrix([...matrix, el.amount + 1]);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    switch (name) {
+      case 'X':
+        setX(value);
+        break;
+      default:
+        break;
+    }
   };
 
   const addRow = () => {
@@ -112,6 +124,9 @@ export const Table = () => {
 
     M -= 1;
     setNewMatrix(matrix);
+
+    // eslint-disable-next-line no-console
+    console.log(matrix);
 
     return M;
   };
@@ -188,13 +203,23 @@ export const Table = () => {
 
   return (
     <>
+      <label>
+        {`X : `}
+        <input
+          type="number"
+          value={X}
+          name="X"
+          onChange={handleChange}
+        />
+      </label>
+
       <div className="table-major">
         <table className="table">
           <tbody>
             <th>
               Table with random values
               { matrix.map(row => (
-                <tr key={row[0].id}>
+                <tr key={row[0].id[0]}>
                   {row.map(el => (
                     <td key={el.id}>
                       <button
