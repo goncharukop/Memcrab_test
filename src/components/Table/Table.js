@@ -64,8 +64,15 @@ export const Table = () => {
       return;
     }
 
+    if (X >= M * N) {
+      setError('"X" field must be < M * N');
+
+      return;
+    }
+
     setNewMatrix(matrixCreate);
     showTable = true;
+    setError('');
   };
 
   const handleChange = (event) => {
