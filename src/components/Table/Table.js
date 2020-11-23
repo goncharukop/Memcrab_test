@@ -8,8 +8,8 @@ let showPercent = false;
 let showTable = false;
 
 export const Table = () => {
-  const [M, setM] = useState(15);
-  const [N, setN] = useState(15);
+  const [M, setM] = useState(10);
+  const [N, setN] = useState(10);
   const [X, setX] = useState(5);
   const [error, setError] = useState('');
 
