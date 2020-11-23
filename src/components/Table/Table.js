@@ -52,8 +52,14 @@ export const Table = () => {
   const handleCreate = (event) => {
     event.preventDefault();
 
-    if (X < 1 || M < 1 || N < 1) {
+    if (M < 1 || N < 1) {
       setError('Fill "M" and "N" fields in diapason 1 - 15, please');
+
+      return;
+    }
+
+    if (X < 1) {
+      setError('"X" field must be > 0');
 
       return;
     }
