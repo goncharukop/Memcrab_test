@@ -8,8 +8,8 @@ let showPercent = false;
 let showTable = false;
 
 export const Table = () => {
-  const [M, setM] = useState(10);
-  const [N, setN] = useState(10);
+  const [M, setM] = useState(15);
+  const [N, setN] = useState(15);
   const [X, setX] = useState(5);
   const [error, setError] = useState('');
 
@@ -52,8 +52,8 @@ export const Table = () => {
   const handleCreate = (event) => {
     event.preventDefault();
 
-    if (!M || !N || !X) {
-      setError('Fill all fields, please');
+    if (X < 1 || M < 1 || N < 1) {
+      setError('Fill "M" and "N" fields in diapason 1 - 15, please');
 
       return;
     }
