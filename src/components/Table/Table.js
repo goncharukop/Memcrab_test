@@ -116,7 +116,7 @@ export const Table = () => {
       rowSum
         .push({
           sum: newMatrix[i].reduce((acc, el) => acc + el.amount, 0),
-          id: i,
+          id: newMatrix[i][0].id[0],
         });
     }
 
