@@ -258,7 +258,7 @@ export const Table = () => {
 
       {
         !showTable
-          ? <h3 className="create-text">Click create table, pease</h3>
+          ? <h2 className="create-text">Click button, please</h2>
           : (
             <>
               <div className="table-major">
