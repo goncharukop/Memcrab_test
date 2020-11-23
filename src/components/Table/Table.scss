@@ -1,10 +1,10 @@
 .table {
   position: relative;
-  margin: 20px;
+  margin: 0 20px;
 
   &__cell {
     position: relative;
-    padding: 20px;
+    padding: 10px;
     margin: 10px;
     width: 100px;
     height: 50px;
@@ -24,7 +24,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 100px;
+  width: 100%;
   background-color:#007025;
   opacity: 50%;
   border-bottom-left-radius: 0.285rem;
@@ -40,4 +40,20 @@
 .add-btn {
   position: relative;
   left: 25px;
+}
+
+.initial-form {
+  width: 200px;
+  margin: 25px;
+}
+
+.create-text {
+  margin-left: 25px;
+}
+
+.initial-form {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 10px;
 }
